@@ -1,0 +1,38 @@
+
+              version: 2
+
+              services:
+                web:
+                  container_name: ehsan_aspnetcore
+                  build: 
+                    context:.
+                    dockerfile:aspnetcore.dockerfile
+                  networks:
+                    - aspnetcoreapp-network
+                  ports:
+                    -"8080:5000"
+
+                postgres:
+                  container_name:ehsan_postgres 
+                  image: postgres
+                  environment:
+                    POSTGRES_PASSWORD: password
+                  networks:
+                    - aspnetcoreapp-network                    
+
+                mysql:
+                  container_name:ehsan_mysql 
+                  image: mysql
+                  networks:
+                    mynetwork:
+                      aliases:
+                        - database
+                    legacy:
+                      aliases:
+                        - mysql
+
+              networks:
+                aspnetcoreapp-network:
+                  driver: bridge
+                mynetwork:
+                legacy:
